@@ -3,15 +3,15 @@ import Ticket from "./Ticket";
 
 @Entity("presence_types")
 export default class PresenceType extends BaseEntity {
-    @PrimaryGeneratedColumn()
-    id: number;
+  @PrimaryGeneratedColumn()
+  id: number;
 
-    @Column()
-    name: string;
+  @Column()
+  name: string;
 
-    @Column()
-    price: number;
+  @Column()
+  price: number;
 
-    @OneToMany(() => Ticket, (ticket) => ticket.presenceType)
-    tickets: Ticket[];
+  @OneToMany(() => Ticket, (ticket) => ticket.presenceType)
+  tickets: Ticket[];
 }
