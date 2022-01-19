@@ -3,15 +3,15 @@ import Room from "./Room";
 
 @Entity("hotels")
 export default class Hotel extends BaseEntity {
-    @PrimaryGeneratedColumn()
-    id: number;
+  @PrimaryGeneratedColumn()
+  id: number;
 
-    @Column()
-    name: string;
+  @Column()
+  name: string;
 
-    @Column()
-    img: string;
+  @Column()
+  img: string;
 
-    @OneToMany(() => Room, (room) => room.hotel)
-    rooms: Room[];
+  @OneToMany(() => Room, (room) => room.hotel)
+  rooms: Room[];
 }

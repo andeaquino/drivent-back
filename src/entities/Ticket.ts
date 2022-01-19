@@ -5,18 +5,18 @@ import PresenceType from "./PresenceType";
 
 @Entity("tickets")
 export default class Ticket extends BaseEntity {
-    @PrimaryGeneratedColumn()
-    id: number;
+  @PrimaryGeneratedColumn()
+  id: number;
 
-    @ManyToOne(() => HotelPlan, { eager: true })
-    @JoinColumn({ name: "hotel_plan_id" })
-    hotelPlan: HotelPlan;
+  @ManyToOne(() => HotelPlan, { eager: true })
+  @JoinColumn({ name: "hotel_plan_id" })
+  hotelPlan: HotelPlan;
 
-    @ManyToOne(() => PresenceType, { eager: true })
-    @JoinColumn({ name: "presence_type_id" })
-    presenceType: PresenceType;
+  @ManyToOne(() => PresenceType, { eager: true })
+  @JoinColumn({ name: "presence_type_id" })
+  presenceType: PresenceType;
 
-    @OneToOne(() => Enrollment, { eager: true })
-    @JoinColumn({ name: "enrollment_id" })
-    enrollment: Enrollment;
+  @OneToOne(() => Enrollment, { eager: true })
+  @JoinColumn({ name: "enrollment_id" })
+  enrollment: Enrollment;
 }

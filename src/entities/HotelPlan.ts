@@ -3,15 +3,15 @@ import Ticket from "./Ticket";
 
 @Entity("hotel_plans")
 export default class HotelPlan extends BaseEntity {
-    @PrimaryGeneratedColumn()
-    id: number;
+  @PrimaryGeneratedColumn()
+  id: number;
 
-    @Column()
-    name: string;
+  @Column()
+  name: string;
 
-    @Column()
-    price: number;
+  @Column()
+  price: number;
 
-    @OneToMany(() => Ticket, (ticket) => ticket.hotelPlan)
-    tickets: Ticket[];
+  @OneToMany(() => Ticket, (ticket) => ticket.hotelPlan)
+  tickets: Ticket[];
 }

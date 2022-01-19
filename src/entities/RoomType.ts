@@ -3,15 +3,15 @@ import Room from "./Room";
 
 @Entity("room_types")
 export default class RoomType extends BaseEntity {
-    @PrimaryGeneratedColumn()
-    id: number;
+  @PrimaryGeneratedColumn()
+  id: number;
 
-    @Column()
-    name: string;
+  @Column()
+  name: string;
 
-    @Column()
-    vacancies: number;
+  @Column()
+  vacancies: number;
 
-    @OneToMany(() => Room, (room) => room.type)
-    rooms: Room[];
+  @OneToMany(() => Room, (room) => room.type)
+  rooms: Room[];
 }

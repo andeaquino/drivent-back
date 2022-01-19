@@ -4,14 +4,14 @@ import Ticket from "./Ticket";
 
 @Entity("bookings")
 export default class Booking extends BaseEntity {
-    @PrimaryGeneratedColumn()
-    id: number;
+  @PrimaryGeneratedColumn()
+  id: number;
 
-    @OneToOne(() => Ticket)
-    @JoinColumn({ name: "ticket_id" })
-    ticket: Ticket;
+  @OneToOne(() => Ticket)
+  @JoinColumn({ name: "ticket_id" })
+  ticket: Ticket;
 
-    @ManyToOne(() => Room, (room: Room) => room.bookings)
-    @JoinColumn({ name: "room_id" })
-    room: Room;
+  @ManyToOne(() => Room, (room: Room) => room.bookings)
+  @JoinColumn({ name: "room_id" })
+  room: Room;
 }

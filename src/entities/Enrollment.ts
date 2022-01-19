@@ -1,6 +1,6 @@
 import CpfNotAvailableError from "@/errors/CpfNotAvailable";
 import EnrollmentData from "@/interfaces/enrollment";
-import { BaseEntity, Entity, PrimaryGeneratedColumn, Column, OneToOne } from "typeorm";
+import { BaseEntity, Entity, PrimaryGeneratedColumn, Column, OneToOne, JoinColumn } from "typeorm";
 import Address from "@/entities/Address";
 import Ticket from "./Ticket";
 
@@ -27,7 +27,8 @@ export default class Enrollment extends BaseEntity {
   @OneToOne(() => Address, (address) => address.enrollment, { eager: true })
   address: Address;
 
-  @OneToOne(() => Ticket, (ticket) => ticket.enrollment,  { eager: true })
+  @OneToOne(() => Ticket, (ticket: Ticket) => ticket.enrollment)
+  @JoinColumn()
   ticket: Ticket;
 
   populateFromData(data: EnrollmentData) {
