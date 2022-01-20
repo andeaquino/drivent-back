@@ -19,3 +19,4 @@ export default class HotelPlan extends BaseEntity {
     return await this.find();
   }
 }
+
