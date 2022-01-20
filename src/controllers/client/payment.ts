@@ -15,3 +15,14 @@ export async function getPlansInfos(req: Request, res: Response) {
   
   res.send(plans).status(httpStatus.OK);
 }
+
+export async function postTicket(req: Request, res: Response) {
+  const enrollmentInfo = await enrollmentService.getEnrollmentWithAddress(req.user.id);
+  const ticketData;
+
+  if(!enrollmentInfo) {
+    throw new CannotPayBeforeEnrollmentError();
+  }
+  
+  res.send(plans).status(httpStatus.OK);
+}
