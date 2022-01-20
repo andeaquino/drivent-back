@@ -1,0 +1,23 @@
+@API_URL = http://localhost:4000 
+
+ GET {{API_URL}}/booking
+
+###
+ GET {{API_URL}}/professors
+###
+ GET {{API_URL}}/subject/2
+
+###
+ GET {{API_URL}}/exams/subject/1
+
+###
+POST {{API_URL}}/exams
+Content-Type: application/json
+
+{
+    "name": "2020.1",
+    "type": "P1",
+    "subject_id": 1,
+    "professor_id": 1,
+    "link": "https://prova1.com.br"
+}
