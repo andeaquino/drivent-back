@@ -14,4 +14,8 @@ export default class PresenceType extends BaseEntity {
 
   @OneToMany(() => Ticket, (ticket) => ticket.presenceType)
   tickets: Ticket[];
+
+  static async getAll() {
+    return await this.find();
+  }
 }
