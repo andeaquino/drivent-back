@@ -14,4 +14,8 @@ export default class HotelPlan extends BaseEntity {
 
   @OneToMany(() => Ticket, (ticket) => ticket.hotelPlan)
   tickets: Ticket[];
+
+  static async getAll() {
+    return await this.find();
+  }
 }
