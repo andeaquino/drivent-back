@@ -20,10 +20,9 @@ export default class Session extends BaseEntity {
     return session;
   }
 
-  static async checkTicket(token: string) {
-    const userId = await this.findOne({ where: { token: token } });
+  static async checkTicket(userId: number) {
     const enrollmentId = await getRepository(Enrollment).findOne({
-      where: { userId: userId.userId },
+      where: { userId: userId },
     });
 
     return await getRepository(Ticket).findOne({

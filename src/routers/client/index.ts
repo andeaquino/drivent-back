@@ -14,6 +14,6 @@ router.use("/event", eventRouter);
 router.use("/users", userRouter);
 router.use("/auth", authRouter);
 router.use("/enrollments", tokenValidationMiddleware, enrollmentRouter);
-router.use("/booking", /*  tokenValidationMiddleware,*/ bookingRouter);
+router.use("/booking", tokenValidationMiddleware, bookingRouter);
 
 export default router;

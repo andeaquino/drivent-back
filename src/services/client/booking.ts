@@ -5,8 +5,8 @@ import Session from "@/entities/Session";
 import Booking from "@/entities/Booking";
 import Hotels from "@/entities/Hotels";
 
-export async function getBooking(token: string) {
-  const ticket = await Session.checkTicket(token);
+export async function getBooking(userId: number) {
+  const ticket = await Session.checkTicket(userId);
 
   if (!ticket) throw new PaymentRequired();
   if (ticket.presenceType.name === "Online") throw new PreconditionFailed();

@@ -4,7 +4,6 @@ import {
   PrimaryGeneratedColumn,
   Column,
   OneToMany,
-  getRepository,
 } from "typeorm";
 import Room from "./Room";
 

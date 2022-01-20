@@ -4,12 +4,10 @@ import * as service from "@/services/client/booking";
 
 export async function get(req: Request, res: Response, next: NextFunction) {
   try {
-    const authorization = req.headers["authorization"];
-    const token = authorization?.replace("Bearer ", "");
+    const userId = req.user.id;
 
-    if (!token) return res.sendStatus(401);
+    const booking = await service.getBooking(userId);
 
-    const booking = await service.getBooking(token);
     res.send(booking);
   } catch (e) {
     if (e.name === "PaymentRequired") {
