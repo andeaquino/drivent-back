@@ -1,7 +1,7 @@
-interface PlansData {
-    id: number,
-    name: string,
-    price: number
+interface TicketData {
+    hotelPlan: number,
+    presenceType: number,
+    enrollmentId: number
 }
 
-export default PlansData;
+export default TicketData;
