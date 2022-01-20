@@ -22,5 +22,5 @@ export async function saveTicket(req: Request, res: Response) {
   const ticketData = req.body as TicketData;
   ticketData.enrollmentId = enrollmentInfo.id;
   await paymentService.createNewTicket(ticketData);
-  res.sendStatus(httpStatus.OK);
+  res.sendStatus(httpStatus.CREATED);
 }
