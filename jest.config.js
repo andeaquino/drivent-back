@@ -1,4 +1,7 @@
 module.exports = {
-  preset: 'ts-jest',
-  testEnvironment: 'node',
+  preset: "ts-jest",
+  moduleNameMapper: {
+    "@/([^\\.]*)$": "<rootDir>/src/$1",
+  },
+  testEnvironment: "node",
 };
