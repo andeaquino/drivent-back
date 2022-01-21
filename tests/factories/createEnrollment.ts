@@ -8,7 +8,7 @@ const createEnrollment = async() => {
   const session = await Session.create({ userId: user.id, token: "token" }).save();
   const enrollment = await Enrollment.create({
     name: "pedrin",
-    cpf: "18627272724",
+    cpf: "18627272725",
     phone: "21987878787", 
     birthday: "14/02/2001",
     userId: user.id,
@@ -22,16 +22,9 @@ const createEnrollment = async() => {
     neighborhood: "Cruzeiro do Sul",
     number: "87",
     addressDetail: "",
-    enrollmentId: 2,
+    enrollmentId: enrollment.id,
   }).save();
 
-  console.log({
-    user,
-    session,
-    address,
-    enrollment,
-  });
-  
   return {
     user,
     enrollment,
