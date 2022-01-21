@@ -25,6 +25,8 @@ export default class Session extends BaseEntity {
       where: { userId: userId },
     });
 
+    if (!enrollmentId) return undefined;
+
     return await getRepository(Ticket).findOne({
       where: { enrollment: enrollmentId.id },
     });

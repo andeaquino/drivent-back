@@ -1,6 +1,6 @@
 export default class PaymentRequired extends Error {
   constructor() {
-    super("You must complete the payment to access this page!");
+    super("Você precisa ter confirmado o pagamento antes de fazer a escolha da hospedagem");
 
     this.name = "PaymentRequired";
   }

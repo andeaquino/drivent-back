@@ -1,6 +1,8 @@
 export default class PreconditionFailed extends Error {
   constructor() {
-    super("Your ticket type does not include hosting!");
+    super(
+      "Sua modalidade de ingresso não inclui hospedagem. Prossiga para a escolha de atividades"
+    );
 
     this.name = "PreconditionFailed";
   }

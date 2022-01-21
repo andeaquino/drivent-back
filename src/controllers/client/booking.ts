@@ -15,7 +15,7 @@ export async function get(req: Request, res: Response, next: NextFunction) {
     }
     if (e.name === "PreconditionFailed") {
       return res.status(412).send(e.message);
-    }
+    } else res.send("Não foi possível conectar ao servidor!");
     next(e);
   }
 }
