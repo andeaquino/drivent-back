@@ -24,3 +24,10 @@ export async function saveTicket(req: Request, res: Response) {
   await paymentService.createNewTicket(ticketData);
   res.sendStatus(httpStatus.CREATED);
 }
+
+export async function getTicket(req: Request, res: Response) {
+  const enrollmentInfo = await enrollmentService.getEnrollmentWithAddress(req.user.id);
+  const ticket = await paymentService.getUserTicket(enrollmentInfo);
+
+  res.send(ticket).status(httpStatus.OK);
+}
