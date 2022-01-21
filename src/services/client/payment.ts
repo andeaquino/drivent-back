@@ -20,5 +20,7 @@ export async function createNewTicket(ticketData: TicketData) {
 
 export async function getUserTicket(enrollment: Enrollment) {
   const ticket = await Ticket.findOne({ where: { enrollment: enrollment.id } });
-  return ticket;
+
+  if(!ticket)
+    return ticket;
 }
