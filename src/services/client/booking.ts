@@ -9,6 +9,7 @@ export async function getBooking(userId: number) {
   const ticket = await Session.checkTicket(userId);
 
   if (!ticket) throw new PaymentRequired();
+
   if (ticket.presenceType.name === "Online") throw new PreconditionFailed();
 
   const bookingInfo = await getRepository(Booking).findOne({ where: { ticket: ticket.id } });
