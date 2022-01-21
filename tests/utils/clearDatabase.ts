@@ -11,17 +11,17 @@ import Ticket from "../../src/entities/Ticket";
 import User from "../../src/entities/User";
 
 const clearDatabase = async() => {
-  await Booking.clear();
-  await Room.clear();
-  await Hotels.clear();
-  await RoomType.clear();
-  await Ticket.clear();
-  await HotelPlan.clear();
-  await PresenceType.clear();
-  await Enrollment.clear();
-  await Session.clear();
-  await User.clear();
+//   await Room.clear();
+//   await Hotels.clear();
+//   await RoomType.clear();
+//   await HotelPlan.clear();
+//   await PresenceType.clear();
+//   await Booking.clear();
+//   await Ticket.clear();
   await Address.clear();
+  await Session.clear(); 
+  await Enrollment.clear();
+  await User.clear();
 };
 
-export default clearDatabase;
+export default clearDatabase; 
