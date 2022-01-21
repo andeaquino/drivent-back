@@ -33,7 +33,7 @@ export default class Ticket extends BaseEntity {
     ticket = Ticket.create();
     ticket.enrollment = enrollment;
     ticket.hotelPlan = await HotelPlan.findOne({ where: { id: data.hotelPlan } });
-    ticket.presenceType = await PresenceType.findOne({ where: { id: data.hotelPlan } });
+    ticket.presenceType = await PresenceType.findOne({ where: { id: data.presenceType } });
     await ticket.save();
   }
 }
