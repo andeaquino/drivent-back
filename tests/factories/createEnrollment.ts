@@ -1,11 +1,10 @@
-import Session from "../../src/entities/Session";
 import Address from "../../src/entities/Address";
 import Enrollment from "../../src/entities/Enrollment";
-import User from "../../src/entities/User";
+import { createSession, createUser } from "./createUser";
 
 const createEnrollment = async() => {
-  const user = await User.createNew("oi@uol.com", "123456");
-  const session = await Session.create({ userId: user.id, token: "token" }).save();
+  const user = await createUser();
+  const session = await createSession(user.id);
   const enrollment = await Enrollment.create({
     name: "pedrin",
     cpf: "18627272725",
