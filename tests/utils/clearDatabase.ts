@@ -7,7 +7,6 @@ import PresenceType from "../../src/entities/PresenceType";
 import Room from "../../src/entities/Room";
 import RoomType from "../../src/entities/RoomType";
 import Session from "../../src/entities/Session";
-import Setting from "../../src/entities/Setting";
 import Ticket from "../../src/entities/Ticket";
 import User from "../../src/entities/User";
 
@@ -23,7 +22,6 @@ const clearDatabase = async() => {
   await Session.clear();
   await User.clear();
   await Address.clear();
-  await Setting.clear();
 };
 
 export default clearDatabase;
