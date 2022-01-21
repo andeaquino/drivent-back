@@ -24,4 +24,4 @@ const clearDatabase = async() => {
   await User.delete({});
 };
 
-export default clearDatabase; 
+export default clearDatabase;
