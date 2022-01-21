@@ -1,6 +1,8 @@
 @API_URL = http://localhost:4000 
 
  GET {{API_URL}}/booking
+ Content-Type: application/json
+ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTY0MjY3NTg5NX0.zmqlmvb3qlRpocxgaS2zqproo2VW5P_nyafq1092R20
 
 ###
  GET {{API_URL}}/professors
