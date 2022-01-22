@@ -1,4 +1,11 @@
-import { BaseEntity, Entity, PrimaryGeneratedColumn, OneToOne, JoinColumn, ManyToOne } from "typeorm";
+import {
+  BaseEntity,
+  Entity,
+  PrimaryGeneratedColumn,
+  OneToOne,
+  JoinColumn,
+  ManyToOne,
+} from "typeorm";
 import Room from "./Room";
 import Ticket from "./Ticket";
 
@@ -14,4 +21,10 @@ export default class Booking extends BaseEntity {
   @ManyToOne(() => Room, (room: Room) => room.bookings)
   @JoinColumn({ name: "room_id" })
   room: Room;
+
+  static async createOrUpdateBooking(ticket: Ticket, room: Room) {
+    const session = this.create({ ticket, room });
+    await session.save();
+    return session;
+  }
 }
