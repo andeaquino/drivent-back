@@ -19,6 +19,7 @@ describe ("GET /payment/plans", () => {
 
   beforeAll(async() => {
     await init();
+    await clearDatabase();
     enrollment = await createEnrollment();
   });
 

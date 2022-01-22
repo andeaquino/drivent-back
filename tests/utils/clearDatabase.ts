@@ -14,10 +14,10 @@ const clearDatabase = async() => {
   await Room.delete({});
   await Hotels.delete({});
   await RoomType.delete({});
-  await HotelPlan.delete({});
-  await PresenceType.delete({});
   await Booking.delete({});
   await Ticket.delete({});
+  await HotelPlan.delete({});
+  await PresenceType.delete({});
   await Address.delete({});
   await Session.delete({}); 
   await Enrollment.delete({});
