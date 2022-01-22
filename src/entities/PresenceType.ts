@@ -1,7 +1,11 @@
 import { BaseEntity, Entity, PrimaryGeneratedColumn, Column, OneToMany } from "typeorm";
 import Ticket from "./Ticket";
 
-@Entity("presence_types")
+@Entity("presence_types", {
+  orderBy: {
+    price: "DESC",
+  }
+})
 export default class PresenceType extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;

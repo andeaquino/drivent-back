@@ -1,6 +1,6 @@
 export default class CannotPayBeforeEnrollmentError extends Error {
   constructor() {
-    super("Cannot access payment without completing your enrollment!");
+    super("Você precisa completar sua inscrição antes de prosseguir pra escolha de ingresso!");
   
     this.name = "CannotPayBeforeEnrollmentError";
   }
