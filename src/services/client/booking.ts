@@ -13,15 +13,21 @@ export async function getBooking(userId: number) {
 
   if (ticket.presenceType.name === "Online") throw new PreconditionFailed();
 
-  const bookingInfo = await getRepository(Booking).findOne({
+  const booking = await getRepository(Booking).findOne({
     where: { ticket: ticket.id },
   });
-
-  if (bookingInfo) return bookingInfo;
-
-  const hotelsInfo = await Hotels.getHotelInfo();
-
-  return hotelsInfo;
+  const hotelsInfos = await Hotels.getHotelInfo();
+  if (booking) {
+    const bookingInfos = await Booking.getRoomInfosByBookingId(booking.id);
+    return {
+      bookingInfos,
+      hotelsInfos,
+    };
+  }
+  return {
+    bookingInfos: null,
+    hotelsInfos,
+  };
 }
 
 export async function postBooking({ userId, roomId }: BookingIds) {

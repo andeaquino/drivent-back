@@ -27,4 +27,28 @@ export default class Booking extends BaseEntity {
     await session.save();
     return session;
   }
+
+  static async getRoomQuantity(id: number) {
+    const result = await this.find({
+      where: { room: id },
+    });
+    return result.length;
+  }
+
+  static async getRoomInfosByBookingId(id: number) {
+    const result = await this.findOne({
+      relations: ["room"],
+      where: { id: id },
+    });
+    const roomQuantity = await this.getRoomQuantity(result.room.id);
+    return {
+      roomId: result.room.id,
+      roomName: result.room.name,
+      roomType: result.room.type.name,
+      roomQuantity,
+      hotelId: result.room.hotel.id,
+      hotelName: result.room.hotel.name,
+      hotelImageUrl: result.room.hotel.img,
+    };
+  }
 }
