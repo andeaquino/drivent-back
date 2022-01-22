@@ -1,7 +1,11 @@
 import { BaseEntity, Entity, PrimaryGeneratedColumn, OneToMany, Column } from "typeorm";
 import Ticket from "./Ticket";
 
-@Entity("hotel_plans")
+@Entity("hotel_plans", {
+  orderBy: {
+    price: "ASC",
+  }
+})
 export default class HotelPlan extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;

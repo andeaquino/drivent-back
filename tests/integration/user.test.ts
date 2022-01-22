@@ -35,7 +35,8 @@ describe("POST /users", () => {
   });
 
   it("should return status 409 when email is already in use", async() => {
-    const user = await createUser();
+    await createUser();
+    const user = generateUserBody();
 
     const result = await supertest(app).post("/users").send(user);
     const { status } = result;
@@ -53,7 +54,8 @@ describe("POST /auth/sign-in", () => {
   });
 
   it("should return status 200 when account is logged in sucessufully", async() => {
-    const user = await createUser();
+    await createUser();
+    const user = generateUserBody();
 
     const result = await supertest(app).post("/auth/sign-in").send(user);
     const status = result.status;
