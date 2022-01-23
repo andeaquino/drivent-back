@@ -23,6 +23,9 @@ export default class Booking extends BaseEntity {
   room: Room;
 
   static async createOrUpdateBooking(ticket: Ticket, room: Room) {
+    if (await this.findOne({ ticket: ticket })) {
+      await this.delete({ ticket: ticket });
+    }
     const session = this.create({ ticket, room });
     await session.save();
     return session;
