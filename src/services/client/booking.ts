@@ -11,7 +11,8 @@ export async function getBooking(userId: number) {
 
   if (!ticket) throw new PaymentRequired();
 
-  if (ticket.presenceType.name === "Online") throw new PreconditionFailed();
+  if (ticket.presenceType.name === "Online" || ticket.hotelPlan.name === "Sem Hotel")
+    throw new PreconditionFailed();
 
   const booking = await getRepository(Booking).findOne({
     where: { ticket: ticket.id },
