@@ -3,22 +3,18 @@ import { getConnection } from "typeorm";
 import clearDatabase from "../utils/clearDatabase";
 import supertest from "supertest";
 import createEnrollment from "../factories/createEnrollment";
-import User from "../../src/entities/User";
-import Enrollment from "../../src/entities/Enrollment";
 import Session from "../../src/entities/Session";
 import httpStatus from "http-status";
 import { createSession, createUser } from "../factories/createUser";
+import CreatedEnrollment from "../utils/CreatedEnrollment";
 
 describe ("GET /payment/plans", () => {
   let session: Session;
-  let enrollment: {
-    user: User;
-    enrollment: Enrollment;
-    session: Session;
-  };
+  let enrollment: CreatedEnrollment;
 
   beforeAll(async() => {
     await init();
+    await clearDatabase();
     enrollment = await createEnrollment();
   });
 

@@ -3,6 +3,8 @@ import Booking from "../../src/entities/Booking";
 import Enrollment from "../../src/entities/Enrollment";
 import Hotels from "../../src/entities/Hotels";
 import Room from "../../src/entities/Room";
+import HotelPlan from "../../src/entities/HotelPlan";
+import PresenceType from "../../src/entities/PresenceType";
 import RoomType from "../../src/entities/RoomType";
 import Session from "../../src/entities/Session";
 import Ticket from "../../src/entities/Ticket";
@@ -14,6 +16,8 @@ const clearDatabase = async() => {
   await RoomType.delete({});
   await Booking.delete({});
   await Ticket.delete({});
+  await HotelPlan.delete({});
+  await PresenceType.delete({});
   await Address.delete({});
   await Session.delete({}); 
   await Enrollment.delete({});
