@@ -12,6 +12,11 @@ export async function createUser() {
   return userData;
 }
 
+export async function createAlternativeUser() {
+  const userData = await User.createNew("oi@gmail.com", "123456");
+  return userData;
+}
+
 export async function createSession(userId: number) {
   const token = jwt.sign({
     userId: userId

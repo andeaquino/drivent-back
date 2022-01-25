@@ -7,14 +7,14 @@ const createEnrollment = async() => {
   const session = await createSession(user.id);
   const enrollment = await Enrollment.create({
     name: "pedrin",
-    cpf: "18627272725",
-    phone: "21987878787", 
+    cpf: "186.272.727-25",
+    phone: "(21) 98787-8787", 
     birthday: "14/02/2001",
     userId: user.id,
   }).save();
 
   const address = await Address.create({
-    cep: "26011680",
+    cep: "26011-680",
     city: "Nova Iguaçu",
     street: "Rua Milton Campos",
     state: "RJ",
