@@ -1,6 +1,7 @@
 import ConflictError from "@/errors/ConflictError";
 import TicketData from "@/interfaces/ticket";
-import { BaseEntity, Entity, PrimaryGeneratedColumn, ManyToOne, JoinColumn, OneToOne } from "typeorm";
+import { BaseEntity, Entity, PrimaryGeneratedColumn, ManyToOne, JoinColumn, OneToOne, ManyToMany } from "typeorm";
+import Activity from "./Activity";
 import Enrollment from "./Enrollment";
 import HotelPlan from "./HotelPlan";
 import PresenceType from "./PresenceType";
@@ -21,6 +22,9 @@ export default class Ticket extends BaseEntity {
   @OneToOne(() => Enrollment, { eager: true })
   @JoinColumn({ name: "enrollment_id" })
   enrollment: Enrollment;
+
+  @ManyToMany(() => Activity, activity => activity.tickets)
+  activities: Activity[];
 
   static async createNew(data: TicketData) {
     const enrollment = await Enrollment.findOne({ where: { id: data.enrollmentId } });
