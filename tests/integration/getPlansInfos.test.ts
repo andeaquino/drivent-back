@@ -29,7 +29,7 @@ describe ("GET /payment/plans", () => {
     await getConnection().close();
   });
 
-  it("Sould return status Ok and an object if valid token and enrolled user", async() => {
+  it("Should return status Ok and an object if valid token and enrolled user", async() => {
     const result = await supertest(app).get("/payment/plans").set("Authorization", `Bearer ${enrollment.session.token}`);
     expect(result.status).toEqual(httpStatus.OK);
     expect(result.body).toEqual({
@@ -38,12 +38,12 @@ describe ("GET /payment/plans", () => {
     });
   });
 
-  it("Sould return unauthorized if invalid token", async() => {
+  it("Should return unauthorized if invalid token", async() => {
     const result = await supertest(app).get("/payment/plans").set({});
     expect(result.status).toEqual(httpStatus.UNAUTHORIZED);
   });
 
-  it("Sould return forbidden if not enrolled user", async() => {
+  it("Should return forbidden if not enrolled user", async() => {
     const result = await supertest(app).get("/payment/plans").set("Authorization", `Bearer ${session.token}`);
     expect(result.status).toEqual(httpStatus.FORBIDDEN);
   });

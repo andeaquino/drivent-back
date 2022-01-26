@@ -32,7 +32,7 @@ describe ("POST payment/payment", () => {
     await getConnection().close();
   });
 
-  it("Sould return status Created if valid token and enrolled user", async() => {
+  it("Should return status Created if valid token and enrolled user", async() => {
     const result = await supertest(app).post("/payment/ticket").send({
       hotelPlan: types.hotelPlan.id,
       presenceType: types.presenceType.id,
@@ -40,7 +40,7 @@ describe ("POST payment/payment", () => {
     expect(result.status).toEqual(httpStatus.CREATED);
   });
 
-  it("Sould return status Conflict if the ticket has already been created", async() => {
+  it("Should return status Conflict if the ticket has already been created", async() => {
     const result = await supertest(app).post("/payment/ticket").send({
       hotelPlan: createdTicket.ticket.hotelPlan.id,
       presenceType: createdTicket.ticket.presenceType.id,
@@ -48,7 +48,7 @@ describe ("POST payment/payment", () => {
     expect(result.status).toEqual(httpStatus.CONFLICT);
   });
 
-  it("Sould return status Unauthorized if invalid token", async() => {
+  it("Should return status Unauthorized if invalid token", async() => {
     const result = await supertest(app).post("/payment/ticket").send({
       hotelPlan: createdTicket.ticket.hotelPlan.id,
       presenceType: createdTicket.ticket.presenceType.id,
@@ -56,7 +56,7 @@ describe ("POST payment/payment", () => {
     expect(result.status).toEqual(httpStatus.UNAUTHORIZED);
   });
 
-  it("Sould return Unprocessable entity if invalid body", async() => {
+  it("Should return Unprocessable entity if invalid body", async() => {
     const result = await supertest(app).post("/payment/ticket").send({
       hotelPlan: createdTicket.ticket.hotelPlan,
       presenceType: createdTicket.ticket.presenceType,

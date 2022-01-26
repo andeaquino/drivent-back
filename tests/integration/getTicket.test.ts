@@ -26,24 +26,24 @@ describe("GET /payment/ticket", () => {
     await getConnection().close();
   });
 
-  it("Sould return forbidden if not enrolled user", async() => {
+  it("Should return forbidden if not enrolled user", async() => {
     const result = await supertest(app).get("/payment/ticket").set("Authorization", `Bearer ${session.token}`);
     expect(result.status).toEqual(httpStatus.FORBIDDEN);
   });
   
-  it("Sould return unauthorized if invalid token", async() => {
+  it("Should return unauthorized if invalid token", async() => {
     const result = await supertest(app).get("/payment/ticket").set({});
     const { status } = result;
     expect(status).toEqual(httpStatus.UNAUTHORIZED);
   });
 
-  it("Sould return not found if user doesn't have a ticket", async() => {
+  it("Should return not found if user doesn't have a ticket", async() => {
     const enrollment = await createEnrollment();
     const result = await supertest(app).get("/payment/ticket").set("Authorization", `Bearer ${enrollment.session.token}`);
     expect(result.status).toEqual(httpStatus.NOT_FOUND);
   });
 
-  it("Sould return status Ok and an object if user has a ticket", async() => {
+  it("Should return status Ok and an object if user has a ticket", async() => {
     const ticket = await createTicket();
     const result = await supertest(app).get("/payment/ticket").set("Authorization", `Bearer ${ticket.session.token}`);
     expect(result.status).toEqual(httpStatus.OK);
