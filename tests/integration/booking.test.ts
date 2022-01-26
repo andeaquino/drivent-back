@@ -43,7 +43,7 @@ describe("GET /booking", () => {
     const result = await supertest(app)
       .get("/booking")
       .set("Authorization", `Bearer ${session.token}`);
-    expect(result.status).toEqual(httpStatus.FORBIDDEN);
+    expect(result.status).toEqual(httpStatus.PAYMENT_REQUIRED);
   });
 });
 
@@ -80,6 +80,6 @@ describe("POST /booking", () => {
     const result = await supertest(app)
       .post("/booking")
       .set("Authorization", `Bearer ${session.token}`);
-    expect(result.status).toEqual(httpStatus.FORBIDDEN);
+    expect(result.status).toEqual(httpStatus.PAYMENT_REQUIRED);
   });
 });
