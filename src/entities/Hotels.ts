@@ -25,20 +25,21 @@ export default class Hotel extends BaseEntity {
     for (let i = 0; i < hotelInfo.length; i++) {
       const elem = hotelInfo[i];
       let totalVacancy = 0;
-      const availableTypes: string[] = [];
+      let availableTypes: string[] = [];
       const roomsById = rooms.filter((info) => info.hotel === elem.id);
-
       roomsById.map((info) => {
         totalVacancy += info.vacancies - info.occupied;
-        if (!availableTypes.includes(info.type)) availableTypes.push(info.type);
+        if (!availableTypes.includes(info.name)) {
+          availableTypes[info.typeId - 1] = info.type;
+        }
       });
-
+      availableTypes = availableTypes.filter(item => !!item);
       result.push({
         id: elem.id,
         name: elem.name,
         img: elem.img,
-        totalVacancy: totalVacancy,
-        availableTypes: availableTypes.sort(),
+        totalVacancy,
+        availableTypes,
         rooms: roomsById,
       });
     }
