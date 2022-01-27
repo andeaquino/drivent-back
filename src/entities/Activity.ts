@@ -1,4 +1,13 @@
-import { BaseEntity, Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn, ManyToMany, JoinTable } from "typeorm";
+import {
+  BaseEntity,
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  ManyToOne,
+  JoinColumn,
+  ManyToMany,
+  JoinTable,
+} from "typeorm";
 import Day from "./Day";
 import Stage from "./Stage";
 import Ticket from "./Ticket";
@@ -28,7 +37,19 @@ export default class Activity extends BaseEntity {
   @JoinColumn({ name: "stage_id" })
   stage: Stage;
 
-  @ManyToMany(() => Ticket, ticket => ticket.activities)
+  @ManyToMany(() => Ticket, (ticket) => ticket.activities)
   @JoinTable()
   tickets: Ticket[];
+
+  static async getActivitiesInfo() {
+    const eventDays = await Day.find();
+    const result = [];
+    for (let i = 0; i < eventDays.length; i++) {
+      const elem = eventDays[i];
+      const activities = await this.find({ where: { day: { id: elem.id } } });
+      result.push({ id: elem.id, name: elem.name, activities: activities });
+    }
+
+    return result;
+  }
 }
