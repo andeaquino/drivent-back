@@ -1,4 +1,13 @@
-import { BaseEntity, Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn, ManyToMany, JoinTable } from "typeorm";
+import {
+  BaseEntity,
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  ManyToOne,
+  JoinColumn,
+  ManyToMany,
+  JoinTable,
+} from "typeorm";
 import Day from "./Day";
 import Stage from "./Stage";
 import Ticket from "./Ticket";
@@ -28,7 +37,40 @@ export default class Activity extends BaseEntity {
   @JoinColumn({ name: "stage_id" })
   stage: Stage;
 
-  @ManyToMany(() => Ticket, ticket => ticket.activities)
+  @ManyToMany(() => Ticket, (ticket) => ticket.activities)
   @JoinTable()
   tickets: Ticket[];
+
+  ticketCount: number;
+
+  openVacancies: number;
+
+  static async getOpenVacancies(activityId: number) {
+    const activity = await this.createQueryBuilder("activities")
+      .loadRelationCountAndMap("activities.ticketCount", "activities.tickets")
+      .where("activities.id = :id", { id: activityId })
+      .getOne();
+
+    const openVacancies = activity.vacancies - activity.ticketCount;
+    return openVacancies;
+  }
+
+  static async getActivitiesInfo() {
+    const eventDays = await Day.find();
+    const result = [];
+
+    for (let i = 0; i < eventDays.length; i++) {
+      const elem = eventDays[i];
+      const activities = await this.find({ where: { day: { id: elem.id } } });
+
+      for (let i = 0; i < activities.length; i++) {
+        const openVacancies = await this.getOpenVacancies(activities[i].id);
+        activities[i].openVacancies = openVacancies;
+      }
+      
+      result.push({ id: elem.id, name: elem.name, activities: activities });
+    }
+
+    return result;
+  }
 }
