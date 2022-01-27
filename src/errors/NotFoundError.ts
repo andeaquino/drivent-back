@@ -1,6 +1,6 @@
 export default class NotFoundError extends Error {
   constructor() {
-    super("No result for this search!");
+    super("Sem resultados para essa pesquisa!");
 
     this.name = "NotFoundError";
   }
