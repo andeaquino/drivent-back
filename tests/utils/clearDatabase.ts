@@ -11,10 +11,10 @@ import Ticket from "../../src/entities/Ticket";
 import User from "../../src/entities/User";
 
 const clearDatabase = async() => {
+  await Booking.delete({});
   await Room.delete({});
   await Hotels.delete({});
   await RoomType.delete({});
-  await Booking.delete({});
   await Ticket.delete({});
   await HotelPlan.delete({});
   await PresenceType.delete({});

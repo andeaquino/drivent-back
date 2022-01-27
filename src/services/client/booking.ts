@@ -33,6 +33,7 @@ export async function getBooking(userId: number) {
 
 export async function postBooking({ userId, roomId }: BookingIds) {
   const ticket = await Session.checkTicket(userId);
-  if (!ticket || !roomId) throw new PreconditionFailed();
+  if (!ticket || !roomId) throw new PaymentRequired();
+  
   await Booking.createOrUpdateBooking(ticket, roomId);
 }
