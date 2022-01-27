@@ -41,12 +41,33 @@ export default class Activity extends BaseEntity {
   @JoinTable()
   tickets: Ticket[];
 
+  ticketCount: number;
+
+  openVacancies: number;
+
+  static async getOpenVacancies(activityId: number) {
+    const activity = await this.createQueryBuilder("activities")
+      .loadRelationCountAndMap("activities.ticketCount", "activities.tickets")
+      .where("activities.id = :id", { id: activityId })
+      .getOne();
+
+    const openVacancies = activity.vacancies - activity.ticketCount;
+    return openVacancies;
+  }
+
   static async getActivitiesInfo() {
     const eventDays = await Day.find();
     const result = [];
+
     for (let i = 0; i < eventDays.length; i++) {
       const elem = eventDays[i];
       const activities = await this.find({ where: { day: { id: elem.id } } });
+
+      for (let i = 0; i < activities.length; i++) {
+        const openVacancies = await this.getOpenVacancies(activities[i].id);
+        activities[i].openVacancies = openVacancies;
+      }
+      
       result.push({ id: elem.id, name: elem.name, activities: activities });
     }
 
