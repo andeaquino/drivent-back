@@ -1,3 +1,5 @@
+import ConflictError from "@/errors/ConflictError";
+import InvalidDataError from "@/errors/InvalidData";
 import {
   BaseEntity,
   Entity,
@@ -67,10 +69,42 @@ export default class Activity extends BaseEntity {
         const openVacancies = await this.getOpenVacancies(activities[i].id);
         activities[i].openVacancies = openVacancies;
       }
-      
+
       result.push({ id: elem.id, name: elem.name, activities: activities });
     }
 
     return result;
   }
+
+  static async getActivitiesByTicket(ticketId: number) {
+    const ticketInfos = await Ticket.findOne({
+      relations: ["activities"],
+      where: { id: ticketId },
+    });
+    return ticketInfos.activities;
+  }
+
+  static async postActivity(ticketId: number, activityId: number) {
+    const userActivities = await this.getActivitiesByTicket(ticketId);
+    const newActivityInfos = await this.findOne({ where: { id: activityId } });
+
+    if (!newActivityInfos) throw InvalidDataError;
+    const openVacancies = await this.getOpenVacancies(newActivityInfos.id);
+
+    if (openVacancies === 0) throw InvalidDataError;
+    userActivities.forEach((item) => {
+      if (isConflict(item, newActivityInfos)) throw ConflictError;
+    });
+  }
+}
+
+function isConflict(item1: Activity, item2: Activity): boolean {
+  if (
+    item1.id === item2.id ||
+    (item1.endTime > item2.startTime &&
+      item1.startTime < item2.endTime &&
+      item1.day.id === item2.day.id)
+  )
+    return true;
+  return false;
 }

@@ -8,9 +8,19 @@ export async function getActivities(userId: number) {
 
   if (!ticket) throw new PaymentRequiredActivities();
 
-  if (ticket.presenceType.name === "Online") throw new PreconditionFailedActivities();
+  if (ticket.presenceType.name === "Online")
+    throw new PreconditionFailedActivities();
 
   const activitiesInfo = await Activity.getActivitiesInfo();
 
   return activitiesInfo;
+}
+
+export async function postUserActivity(userId: number, activityId: number) {
+  const ticket = await Session.checkTicket(userId);
+
+  if (!ticket) throw new PaymentRequiredActivities();
+
+  const itemPosted = await Activity.postActivity(ticket.id, activityId);
+  return itemPosted;
 }

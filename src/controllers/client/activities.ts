@@ -8,3 +8,10 @@ export async function get(req: Request, res: Response) {
 
   res.send(activities);
 }
+
+export async function post(req: Request, res: Response) {
+  const userId: number = req.user.id;
+  const activityId: number = req.body.activityId;
+
+  await service.postUserActivity(userId, activityId);
+}
