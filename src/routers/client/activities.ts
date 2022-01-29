@@ -5,6 +5,6 @@ import * as controller from "@/controllers/client/activities";
 const router = Router();
 
 router.get("/", controller.get);
-router.post("/", controller.post);
+router.post("/:id", controller.post);
 
 export default router;
