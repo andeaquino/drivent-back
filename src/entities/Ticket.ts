@@ -31,7 +31,7 @@ export default class Ticket extends BaseEntity {
   @JoinColumn({ name: "enrollment_id" })
   enrollment: Enrollment;
 
-  @ManyToMany(() => Activity, (activity) => activity.tickets, { cascade: true })
+  @ManyToMany(() => Activity, (activity) => activity.tickets)
   activities: Activity[];
 
   static async createNew(data: TicketData) {
