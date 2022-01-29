@@ -2,7 +2,7 @@ import app, { init } from "../../src/app";
 import supertest from "supertest";
 import { getConnection } from "typeorm";
 import clearDatabase from "../utils/clearDatabase";
-import httpStatus from "http-status";
+import http from "../../src/enums/http.status";
 import CreatedEnrollment from "../utils/CreatedEnrollment";
 import createEnrollment from "../factories/createEnrollment";
 import Session from "../../src/entities/Session";
@@ -47,7 +47,7 @@ describe ("POST /enrollments", () => {
       },
       phone: "(21) 96666-4444", 
     }).set("Authorization", `Bearer ${session.token}`);
-    expect(result.status).toEqual(httpStatus.CONFLICT);
+    expect(result.status).toEqual(http.CONFLICT);
   });
 
   it("Sould return status Created if valid token and not enrolled user", async() => {
@@ -66,12 +66,12 @@ describe ("POST /enrollments", () => {
       },
       phone: "(21) 96666-4444", 
     }).set("Authorization", `Bearer ${session.token}`);
-    expect(result.status).toEqual(httpStatus.CREATED);
+    expect(result.status).toEqual(http.CREATED);
   });
 
   it("Sould return status Unauthorized if invalid token", async() => {
     const result = await supertest(app).post("/enrollments").send({}).set("Authorization", `Bearer ${enrollment.session.token}`);
-    expect(result.status).toEqual(httpStatus.UNAUTHORIZED);
+    expect(result.status).toEqual(http.UNAUTHORIZED);
   });
 
   it("Sould return Unprocessable entity if invalid body", async() => {
@@ -82,6 +82,6 @@ describe ("POST /enrollments", () => {
       address: 1,
       phone: "", 
     }).set("Authorization", `Bearer ${session.token}`);
-    expect(result.status).toEqual(httpStatus.UNPROCESSABLE_ENTITY);
+    expect(result.status).toEqual(http.UNPROCESSABLE_ENTITY);
   });
 });

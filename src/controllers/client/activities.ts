@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-
+import http from "@/enums/http.status";
 import * as service from "@/services/client/activities";
 
 export async function get(req: Request, res: Response) {
@@ -14,4 +14,5 @@ export async function post(req: Request, res: Response) {
   const activityId: number = req.body.activityId;
 
   await service.postUserActivity(userId, activityId);
+  res.sendStatus(http.OK);
 }

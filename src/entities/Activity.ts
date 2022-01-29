@@ -39,7 +39,7 @@ export default class Activity extends BaseEntity {
   @JoinColumn({ name: "stage_id" })
   stage: Stage;
 
-  @ManyToMany(() => Ticket, (ticket) => ticket.activities)
+  @ManyToMany(() => Ticket, (ticket) => ticket.activities, { cascade: true })
   @JoinTable()
   tickets: Ticket[];
 
@@ -87,14 +87,18 @@ export default class Activity extends BaseEntity {
   static async postActivity(ticketId: number, activityId: number) {
     const userActivities = await this.getActivitiesByTicket(ticketId);
     const newActivityInfos = await this.findOne({ where: { id: activityId } });
-
     if (!newActivityInfos) throw InvalidDataError;
+
     const openVacancies = await this.getOpenVacancies(newActivityInfos.id);
 
     if (openVacancies === 0) throw InvalidDataError;
+
     userActivities.forEach((item) => {
       if (isConflict(item, newActivityInfos)) throw ConflictError;
     });
+    const ticket = await Ticket.findOne({ where: { id: ticketId } });
+    newActivityInfos.tickets = [ticket];
+    return newActivityInfos;
   }
 }
 

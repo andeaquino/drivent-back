@@ -1,6 +1,6 @@
 import supertest from "supertest";
 import { getConnection } from "typeorm";
-import httpStatus from "http-status";
+import http from "../../src/enums/http.status";
 
 import app, { init } from "../../src/app";
 import { createUser, generateUserBody } from "../factories/createUser";
@@ -24,7 +24,7 @@ describe("POST /users", () => {
 
     const result = await supertest(app).post("/users").send(body);
     const { status } = result;
-    expect(status).toEqual(httpStatus.UNPROCESSABLE_ENTITY);
+    expect(status).toEqual(http.UNPROCESSABLE_ENTITY);
   });
 
   it("should return status created when account is created sucessufully", async() => {
@@ -32,7 +32,7 @@ describe("POST /users", () => {
 
     const result = await supertest(app).post("/users").send(body);
     const { status } = result;
-    expect(status).toEqual(httpStatus.CREATED);
+    expect(status).toEqual(http.CREATED);
   });
 
   it("should return conflict when email is already in use", async() => {
@@ -41,7 +41,7 @@ describe("POST /users", () => {
 
     const result = await supertest(app).post("/users").send(user);
     const { status } = result;
-    expect(status).toEqual(httpStatus.CONFLICT);
+    expect(status).toEqual(http.CONFLICT);
   });
 });
 
@@ -51,7 +51,7 @@ describe("POST /auth/sign-in", () => {
 
     const result = await supertest(app).post("/auth/sign-in").send(body);
     const status = result.status;
-    expect(status).toEqual(httpStatus.UNPROCESSABLE_ENTITY);
+    expect(status).toEqual(http.UNPROCESSABLE_ENTITY);
   });
 
   it("should return status OK when account is logged in sucessufully", async() => {
@@ -60,7 +60,7 @@ describe("POST /auth/sign-in", () => {
 
     const result = await supertest(app).post("/auth/sign-in").send(user);
     const status = result.status;
-    expect(status).toEqual(httpStatus.OK);
+    expect(status).toEqual(http.OK);
   });
 
   it("should return unauthorized when email or password does not match or exist", async() => {
@@ -69,7 +69,7 @@ describe("POST /auth/sign-in", () => {
 
     const result = await supertest(app).post("/auth/sign-in").send(body);
     const status = result.status;
-    expect(status).toEqual(httpStatus.UNAUTHORIZED);
+    expect(status).toEqual(http.UNAUTHORIZED);
   });
 });
 
