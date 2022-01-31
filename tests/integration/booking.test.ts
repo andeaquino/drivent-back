@@ -1,7 +1,7 @@
 import app, { init } from "../../src/app";
 import supertest from "supertest";
 import createBooking from "../factories/createBooking";
-import httpStatus from "http-status";
+import http from "../../src/enums/http.status";
 import clearDatabase from "../utils/clearDatabase";
 import RoomInfos from "../../src/interfaces/roomInfos";
 import { createAlternativeUser, createSession } from "../factories/createUser";
@@ -29,21 +29,21 @@ describe("GET /booking", () => {
 
   it("should return UNAUTHORIZED to invalid payment info", async() => {
     const result = await supertest(app).get("/booking");
-    expect(result.status).toEqual(httpStatus.UNAUTHORIZED);
+    expect(result.status).toEqual(http.UNAUTHORIZED);
   });
 
   it("should return OK to a valid session", async() => {
     const result = await supertest(app)
       .get("/booking")
       .set("Authorization", `Bearer ${infos.ticket.session.token}`);
-    expect(result.status).toEqual(httpStatus.OK);
+    expect(result.status).toEqual(http.OK);
   });
 
   it("should return FORBIDDEN to a user who has no ticket", async() => {
     const result = await supertest(app)
       .get("/booking")
       .set("Authorization", `Bearer ${session.token}`);
-    expect(result.status).toEqual(httpStatus.PAYMENT_REQUIRED);
+    expect(result.status).toEqual(http.PAYMENT_REQUIRED);
   });
 });
 
@@ -66,20 +66,21 @@ describe("POST /booking", () => {
 
   it("should return UNAUTHORIZED to invalid payment info", async() => {
     const result = await supertest(app).post("/booking");
-    expect(result.status).toEqual(httpStatus.UNAUTHORIZED);
+    expect(result.status).toEqual(http.UNAUTHORIZED);
   });
 
   it("should return OK to a valid session", async() => {
     const result = await supertest(app)
       .post("/booking")
-      .set("Authorization", `Bearer ${ticketInfos.session.token}`).send({ userId: ticketInfos.user.id, roomId: room.id });
-    expect(result.status).toEqual(httpStatus.OK);
+      .set("Authorization", `Bearer ${ticketInfos.session.token}`)
+      .send({ userId: ticketInfos.user.id, roomId: room.id });
+    expect(result.status).toEqual(http.OK);
   });
 
   it("should return FORBIDDEN to a user who has no ticket", async() => {
     const result = await supertest(app)
       .post("/booking")
       .set("Authorization", `Bearer ${session.token}`);
-    expect(result.status).toEqual(httpStatus.PAYMENT_REQUIRED);
+    expect(result.status).toEqual(http.PAYMENT_REQUIRED);
   });
 });

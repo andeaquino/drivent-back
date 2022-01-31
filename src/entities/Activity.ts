@@ -37,7 +37,7 @@ export default class Activity extends BaseEntity {
   @JoinColumn({ name: "stage_id" })
   stage: Stage;
 
-  @ManyToMany(() => Ticket, (ticket) => ticket.activities)
+  @ManyToMany(() => Ticket, (ticket) => ticket.activities, { cascade: true })
   @JoinTable()
   tickets: Ticket[];
 
@@ -68,9 +68,27 @@ export default class Activity extends BaseEntity {
         activities[i].openVacancies = openVacancies;
       }
 
-      result.push({ id: elem.id, name: elem.name, stages: stages, activities: activities });
+      result.push({
+        id: elem.id,
+        name: elem.name,
+        stages: stages,
+        activities: activities,
+      });
     }
 
     return result;
+  }
+
+  static async getActivitiesByTicket(ticketId: number) {
+    const ticketInfos = await Ticket.findOne({
+      relations: ["activities"],
+      where: { id: ticketId },
+    });
+    return ticketInfos.activities;
+  }
+
+  static async postActivity(ticket: Ticket, newActivityInfos: Activity) {
+    newActivityInfos.tickets = [ticket];
+    this.save(newActivityInfos);
   }
 }

@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from "express";
-import httpStatus from "http-status";
+import http from "../enums/http.status";
 
 import InvalidEmailError from "@/errors/InvalidEmail";
 import CannotEnrollBeforeStartDateError from "@/errors/CannotEnrollBeforeStartDate";
@@ -24,71 +24,71 @@ export default function errorHandlingMiddleware(
   /* eslint-disable-next-line */
   console.error(err);
   if (err instanceof InvalidEmailError) {
-    return res.status(httpStatus.BAD_REQUEST).send({
+    return res.status(http.BAD_REQUEST).send({
       message: err.message,
     });
   }
 
   if (err instanceof CannotEnrollBeforeStartDateError) {
-    return res.status(httpStatus.BAD_REQUEST).send({
+    return res.status(http.BAD_REQUEST).send({
       message: err.message,
     });
   }
 
   if (err instanceof InvalidDataError) {
-    return res.status(httpStatus.UNPROCESSABLE_ENTITY).send({
+    return res.status(http.UNPROCESSABLE_ENTITY).send({
       message: err.message,
       details: err.details,
     });
   }
 
   if (err instanceof ConflictError) {
-    return res.status(httpStatus.CONFLICT).send({
+    return res.status(http.CONFLICT).send({
       message: err.message,
     });
   }
 
   if (err instanceof UnauthorizedError) {
-    return res.status(httpStatus.UNAUTHORIZED).send({
+    return res.status(http.UNAUTHORIZED).send({
       message: err.message,
     });
   }
   if (err instanceof PreconditionFailed) {
-    return res.status(httpStatus.PRECONDITION_FAILED).send({
+    return res.status(http.PRECONDITION_FAILED).send({
       message: err.message,
     });
   }
   if (err instanceof PreconditionFailedActivities) {
-    return res.status(httpStatus.PRECONDITION_FAILED).send({
+    return res.status(http.PRECONDITION_FAILED).send({
       message: err.message,
     });
   }
   if (err instanceof PaymentRequired) {
-    return res.status(httpStatus.PAYMENT_REQUIRED).send({
+    return res.status(http.PAYMENT_REQUIRED).send({
       message: err.message,
     });
   }
   if (err instanceof PaymentRequiredActivities) {
-    return res.status(httpStatus.PAYMENT_REQUIRED).send({
+    return res.status(http.PAYMENT_REQUIRED).send({
       message: err.message,
     });
   }
 
   if (err instanceof NotFoundError) {
-    return res.status(httpStatus.NOT_FOUND).send({
+    return res.status(http.NOT_FOUND).send({
       message: err.message,
     });
   }
 
   if (err instanceof CannotPayBeforeEnrollmentError) {
-    return res.status(httpStatus.FORBIDDEN).send({
+    return res.status(http.FORBIDDEN).send({
       message: err.message,
     });
   }
 
   /* eslint-disable-next-line no-console */
   console.error(err);
-  res.status(httpStatus.INTERNAL_SERVER_ERROR).send({
+  res.status(http.INTERNAL_SERVER_ERROR).send({
     message: "Internal Server Error!",
   });
 }
