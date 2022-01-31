@@ -62,13 +62,13 @@ export default class Activity extends BaseEntity {
     for (let i = 0; i < eventDays.length; i++) {
       const elem = eventDays[i];
       const activities = await this.find({ where: { day: { id: elem.id } } });
-
+      const stages = await Stage.find();
       for (let i = 0; i < activities.length; i++) {
         const openVacancies = await this.getOpenVacancies(activities[i].id);
         activities[i].openVacancies = openVacancies;
       }
-      
-      result.push({ id: elem.id, name: elem.name, activities: activities });
+
+      result.push({ id: elem.id, name: elem.name, stages: stages, activities: activities });
     }
 
     return result;
