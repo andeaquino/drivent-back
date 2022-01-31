@@ -55,7 +55,7 @@ export default class Activity extends BaseEntity {
     return openVacancies;
   }
 
-  static async getActivitiesInfo() {
+  static async getActivitiesInfo(ticketId: number) {
     const eventDays = await Day.find();
     const result = [];
 
@@ -63,6 +63,8 @@ export default class Activity extends BaseEntity {
       const elem = eventDays[i];
       const activities = await this.find({ where: { day: { id: elem.id } } });
       const stages = await Stage.find();
+      const selectedActivities = await this.getActivitiesByTicket(ticketId);
+
       for (let i = 0; i < activities.length; i++) {
         const openVacancies = await this.getOpenVacancies(activities[i].id);
         activities[i].openVacancies = openVacancies;
@@ -72,6 +74,7 @@ export default class Activity extends BaseEntity {
         id: elem.id,
         name: elem.name,
         stages: stages,
+        selectedActivities: selectedActivities,
         activities: activities,
       });
     }

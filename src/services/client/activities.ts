@@ -22,10 +22,9 @@ export async function getActivities(userId: number) {
 
   if (!ticket) throw new PaymentRequiredActivities();
 
-  if (ticket.presenceType.name === "Online")
-    throw new PreconditionFailedActivities();
+  if (ticket.presenceType.name === "Online") throw new PreconditionFailedActivities();
 
-  const activitiesInfo = await Activity.getActivitiesInfo();
+  const activitiesInfo = await Activity.getActivitiesInfo(ticket.id);
 
   return activitiesInfo;
 }
@@ -43,11 +42,11 @@ export async function postUserActivity(userId: number, activityId: number) {
   const openVacancies = await Activity.getOpenVacancies(newActivityInfos.id);
 
   if (openVacancies === 0)
-    throw new InvalidDataError("Activity", ["this activity has no vacancies"]);
+    throw new InvalidDataError("Essa atividade não possui vagas disponíveis.", ["this activity has no vacancies"]);
 
   userActivities.forEach((item) => {
     if (isConflict(item, newActivityInfos))
-      throw new ConflictError("You already have a activity in this time");
+      throw new ConflictError("Você já possui uma atividade nesse horário");
   });
 
   await Activity.postActivity(ticket, newActivityInfos);
