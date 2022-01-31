@@ -4,7 +4,7 @@ import clearDatabase from "../utils/clearDatabase";
 import supertest from "supertest";
 import createEnrollment from "../factories/createEnrollment";
 import Session from "../../src/entities/Session";
-import httpStatus from "http-status";
+import http from "../../src/enums/http.status";
 import { createSession, createUser } from "../factories/createUser";
 import CreatedEnrollment from "../utils/CreatedEnrollment";
 
@@ -31,7 +31,7 @@ describe ("GET /payment/plans", () => {
 
   it("Should return status Ok and an object if valid token and enrolled user", async() => {
     const result = await supertest(app).get("/payment/plans").set("Authorization", `Bearer ${enrollment.session.token}`);
-    expect(result.status).toEqual(httpStatus.OK);
+    expect(result.status).toEqual(http.OK);
     expect(result.body).toEqual({
       hotelPlans: expect.any(Array),
       presenceTypes: expect.any(Array),
@@ -40,11 +40,11 @@ describe ("GET /payment/plans", () => {
 
   it("Should return unauthorized if invalid token", async() => {
     const result = await supertest(app).get("/payment/plans").set({});
-    expect(result.status).toEqual(httpStatus.UNAUTHORIZED);
+    expect(result.status).toEqual(http.UNAUTHORIZED);
   });
 
   it("Should return forbidden if not enrolled user", async() => {
     const result = await supertest(app).get("/payment/plans").set("Authorization", `Bearer ${session.token}`);
-    expect(result.status).toEqual(httpStatus.FORBIDDEN);
+    expect(result.status).toEqual(http.FORBIDDEN);
   });
 });

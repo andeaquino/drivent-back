@@ -3,7 +3,7 @@ import supertest from "supertest";
 import { getConnection } from "typeorm";
 import clearDatabase from "../utils/clearDatabase";
 import createTicket from "../factories/createTicket";
-import httpStatus from "http-status";
+import http from "../../src/enums/http.status";
 import CreatedTicket from "../utils/CreatedTicket";
 import CreatedEnrollment from "../utils/CreatedEnrollment";
 import createEnrollment from "../factories/createEnrollment";
@@ -37,7 +37,7 @@ describe ("POST payment/payment", () => {
       hotelPlan: types.hotelPlan.id,
       presenceType: types.presenceType.id,
     }).set("Authorization", `Bearer ${enrollment.session.token}`);
-    expect(result.status).toEqual(httpStatus.CREATED);
+    expect(result.status).toEqual(http.CREATED);
   });
 
   it("Should return status Conflict if the ticket has already been created", async() => {
@@ -45,7 +45,7 @@ describe ("POST payment/payment", () => {
       hotelPlan: createdTicket.ticket.hotelPlan.id,
       presenceType: createdTicket.ticket.presenceType.id,
     }).set("Authorization", `Bearer ${createdTicket.session.token}`);
-    expect(result.status).toEqual(httpStatus.CONFLICT);
+    expect(result.status).toEqual(http.CONFLICT);
   });
 
   it("Should return status Unauthorized if invalid token", async() => {
@@ -53,7 +53,7 @@ describe ("POST payment/payment", () => {
       hotelPlan: createdTicket.ticket.hotelPlan.id,
       presenceType: createdTicket.ticket.presenceType.id,
     }).set("Authorization", "Bearer ");
-    expect(result.status).toEqual(httpStatus.UNAUTHORIZED);
+    expect(result.status).toEqual(http.UNAUTHORIZED);
   });
 
   it("Should return Unprocessable entity if invalid body", async() => {
@@ -61,6 +61,6 @@ describe ("POST payment/payment", () => {
       hotelPlan: createdTicket.ticket.hotelPlan,
       presenceType: createdTicket.ticket.presenceType,
     }).set("Authorization", `Bearer ${createdTicket.session.token}`);
-    expect(result.status).toEqual(httpStatus.UNPROCESSABLE_ENTITY);
+    expect(result.status).toEqual(http.UNPROCESSABLE_ENTITY);
   });
 });

@@ -2,7 +2,7 @@ import app, { init } from "../../src/app";
 import supertest from "supertest";
 import { getConnection } from "typeorm";
 import clearDatabase from "../utils/clearDatabase";
-import httpStatus from "http-status";
+import http from "../../src/enums/http.status";
 import CreatedEnrollment from "../utils/CreatedEnrollment";
 import createEnrollment from "../factories/createEnrollment";
 import Session from "../../src/entities/Session";
@@ -33,7 +33,7 @@ describe ("GET /enrollments", () => {
 
   it("Sould return status Ok and an object if valid token and enrolled user", async() => {
     const result = await supertest(app).get("/enrollments").set("Authorization", `Bearer ${enrollment.session.token}`);
-    expect(result.status).toEqual(httpStatus.OK);
+    expect(result.status).toEqual(http.OK);
     expect(result.body).toEqual({
       id: expect.any(Number),
       cpf: expect.any(String),
@@ -47,11 +47,11 @@ describe ("GET /enrollments", () => {
 
   it("Sould return status Unauthorized if invalid token", async() => {
     const result = await supertest(app).get("/enrollments").set({});
-    expect(result.status).toEqual(httpStatus.UNAUTHORIZED);
+    expect(result.status).toEqual(http.UNAUTHORIZED);
   });
 
   it("Sould return return no content if not enrolled user", async() => {
     const result = await supertest(app).get("/enrollments").set("Authorization", `Bearer ${session.token}`);
-    expect(result.status).toEqual(httpStatus.NO_CONTENT);
+    expect(result.status).toEqual(http.NO_CONTENT);
   });
 });
