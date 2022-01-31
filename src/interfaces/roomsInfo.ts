@@ -4,6 +4,7 @@ interface RoomsInfo {
   hotel: number;
   type: string;
   vacancies: number;
+  typeId: number;
   occupied: number;
 }
 export default RoomsInfo;

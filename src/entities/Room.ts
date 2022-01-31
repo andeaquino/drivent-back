@@ -44,6 +44,7 @@ export default class Room extends BaseEntity {
         hotel: elem.hotel.id,
         type: elem.type.name,
         vacancies: elem.type.vacancies,
+        typeId: elem.type.id,
         occupied: bookings.length,
       });
     }
