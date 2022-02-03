@@ -15,3 +15,10 @@ export async function post(req: Request, res: Response) {
   await service.postUserActivity(userId, activityId);
   res.sendStatus(http.CREATED);
 }
+
+export async function cancel(req: Request, res: Response) {
+  const userId: number = req.user.id;
+  const activityId = Number(req.params.id);
+  await service.cancel(userId, activityId);
+  res.sendStatus(http.OK);
+}

@@ -94,4 +94,14 @@ export default class Activity extends BaseEntity {
     newActivityInfos.tickets = [ticket];
     this.save(newActivityInfos);
   }
+
+  static async deleteActivity(ticketId: number, activityId: number) {
+    const ticketInfos = await Ticket.findOne({
+      relations: ["activities"],
+      where: { id: ticketId },
+    });
+
+    ticketInfos.activities = ticketInfos.activities.filter((info) => info.id !== activityId);
+    Ticket.save(ticketInfos);
+  }
 }
