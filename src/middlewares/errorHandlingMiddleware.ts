@@ -12,6 +12,8 @@ import PreconditionFailed from "@/errors/PreconditionFailed";
 import PaymentRequired from "@/errors/PaymentRequired";
 import PreconditionFailedActivities from "@/errors/PreconditionFailedActivities";
 import PaymentRequiredActivities from "@/errors/PaymentRequiredActivities";
+import CannotGetCertificateWithoutActivities from "@/errors/CannotGetCertificateWithoutActivities";
+import PaymentRequiredCertificate from "@/errors/PaymentRequiredCertificate";
 
 /* eslint-disable-next-line */
 export default function errorHandlingMiddleware(
@@ -81,6 +83,16 @@ export default function errorHandlingMiddleware(
   }
 
   if (err instanceof CannotPayBeforeEnrollmentError) {
+    return res.status(http.FORBIDDEN).send({
+      message: err.message,
+    });
+  }
+  if (err instanceof CannotGetCertificateWithoutActivities) {
+    return res.status(http.FORBIDDEN).send({
+      message: err.message,
+    });
+  }
+  if (err instanceof PaymentRequiredCertificate) {
     return res.status(http.FORBIDDEN).send({
       message: err.message,
     });
