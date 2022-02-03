@@ -12,20 +12,24 @@ export async function getCertificateInfos(userId: number) {
   if (!activities && ticket.presenceType.id === 1)
     throw new CannotGetCertificateWithoutActivities();
 
-  let time = 0;
-
-  for (let i = 0; i < activities.length; i++) {
-    const start = Number(
-      activities[i].startTime[0] + activities[i].startTime[1]
-    );
-    const end = Number(activities[i].endTime[0] + activities[i].endTime[1]);
-    time += end - start;
-  }
-
   const infos = {
     name: ticket.enrollment.name,
     presenceType: ticket.presenceType.name,
-    time: ticket.presenceType.id === 1 ? time : 20,
+    time: 20,
   };
+
+  if (activities?.length > 0) {
+    let time = 0;
+
+    for (let i = 0; i < activities.length; i++) {
+      const start = Number(
+        activities[i].startTime[0] + activities[i].startTime[1]
+      );
+      const end = Number(activities[i].endTime[0] + activities[i].endTime[1]);
+      time += end - start;
+    }
+    infos.time = time;
+  }
+
   return infos;
 }
