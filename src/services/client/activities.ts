@@ -1,6 +1,5 @@
 import Activity from "@/entities/Activity";
 import Session from "@/entities/Session";
-import Ticket from "@/entities/Ticket";
 import ConflictError from "@/errors/ConflictError";
 import InvalidDataError from "@/errors/InvalidData";
 import NotFoundError from "@/errors/NotFoundError";
