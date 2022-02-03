@@ -1,5 +1,6 @@
 import Activity from "@/entities/Activity";
 import Session from "@/entities/Session";
+import Ticket from "@/entities/Ticket";
 import ConflictError from "@/errors/ConflictError";
 import InvalidDataError from "@/errors/InvalidData";
 import NotFoundError from "@/errors/NotFoundError";
@@ -42,7 +43,9 @@ export async function postUserActivity(userId: number, activityId: number) {
   const openVacancies = await Activity.getOpenVacancies(newActivityInfos.id);
 
   if (openVacancies === 0)
-    throw new InvalidDataError("Essa atividade não possui vagas disponíveis.", ["this activity has no vacancies"]);
+    throw new InvalidDataError("Essa atividade não possui vagas disponíveis.", [
+      "this activity has no vacancies",
+    ]);
 
   userActivities.forEach((item) => {
     if (isConflict(item, newActivityInfos))
@@ -50,4 +53,16 @@ export async function postUserActivity(userId: number, activityId: number) {
   });
 
   await Activity.postActivity(ticket, newActivityInfos);
+}
+
+export async function cancel(userId: number, activityId: number) {
+  const ticket = await Session.checkTicket(userId);
+  if (!ticket) throw new PaymentRequiredActivities();
+
+  const activityInfos = await Activity.findOne({
+    where: { id: activityId },
+  });
+  if (!activityInfos) throw new NotFoundError();
+
+  await Activity.deleteActivity(ticket.id, activityId);
 }
