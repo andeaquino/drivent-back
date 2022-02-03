@@ -1,16 +1,17 @@
 import Activity from "@/entities/Activity";
+import Session from "@/entities/Session";
 import Ticket from "@/entities/Ticket";
 import CannotGetCertificateWithoutActivities from "@/errors/CannotGetCertificateWithoutActivities";
 import PaymentRequiredCertificate from "@/errors/PaymentRequiredCertificate";
 
 export async function getCertificateInfos(userId: number) {
-  const ticket = await Ticket.findOne({ where: { enrollment: userId } });
+  const ticket = await Session.checkTicket(userId);
   if (!ticket) throw new PaymentRequiredCertificate();
-
   const activities = await Activity.getActivitiesByTicket(ticket.id);
 
-  if (activities.length === 0 && ticket.presenceType.id === 1)
+  if (activities.length === 0 && ticket.presenceType.id === 1) {
     throw new CannotGetCertificateWithoutActivities();
+  }
 
   const infos = {
     name: ticket.enrollment.name,
