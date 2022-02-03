@@ -15,7 +15,7 @@ export async function getCertificateInfos(userId: number) {
   const infos = {
     name: ticket.enrollment.name,
     presenceType: ticket.presenceType.name,
-    time: 20,
+    time: 8,
   };
 
   if (activities?.length > 0) {
