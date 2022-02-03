@@ -9,7 +9,7 @@ export async function getCertificateInfos(userId: number) {
 
   const activities = await Activity.getActivitiesByTicket(ticket.id);
 
-  if (!activities && ticket.presenceType.id === 1)
+  if (activities.length === 0 && ticket.presenceType.id === 1)
     throw new CannotGetCertificateWithoutActivities();
 
   const infos = {
