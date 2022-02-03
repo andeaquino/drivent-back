@@ -7,7 +7,7 @@ import enrollmentRouter from "@/routers/client/enrollment";
 import paymentRouter from "@/routers/client/payment";
 import bookingRouter from "@/routers/client/booking";
 import activitiesRouter from "@/routers/client/activities";
-
+import certificateRouter from "@/routers/client/certificate";
 import tokenValidationMiddleware from "@/middlewares/tokenValidationMiddleware";
 
 const router = Router();
@@ -19,5 +19,6 @@ router.use("/enrollments", tokenValidationMiddleware, enrollmentRouter);
 router.use("/payment", tokenValidationMiddleware, paymentRouter);
 router.use("/booking", tokenValidationMiddleware, bookingRouter);
 router.use("/activities", tokenValidationMiddleware, activitiesRouter);
+router.use("/certificate", tokenValidationMiddleware, certificateRouter);
 
 export default router;
